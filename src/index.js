@@ -182,7 +182,10 @@ const onReset = ({ game, cells, statusHeading, startHeading, onClick }) => {
   game.reset();
   statusHeading.innerText = startHeading;
   cells.forEach((cell) => (cell.innerText = null));
-  cells.forEach((cell) => cell.addEventListener("click", onClick));
+  cells.forEach((cell) => {
+    cell.removeEventListener("click", onClick);
+    cell.addEventListener("click", onClick);
+  });
 };
 
 const startButton = document.querySelector("#start");
