@@ -1,0 +1,195 @@
+body {
+    font-family: sans-serif;
+    color: darkcyan;
+  }
+  
+  h1 {
+    font-size: 42px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    font-weight: lighter;
+    margin-top: 0;
+  }
+  
+  input {
+    border-color: aquamarine;
+    height: 20px;
+  }
+  
+  button {
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #start {
+    margin-top: 8px;
+    padding: 8px;
+    background-color: aquamarine;
+    border-color: aqua;
+    border-width: 10px;
+    color: darkcyan;
+  }
+  
+  #reset {
+    padding: 16px;
+    border-width: 0px;
+    background-color: darkcyan;
+    color: white;
+  }
+  
+  p {
+    font-family: sans-serif;
+    margin: 4px;
+    text-overflow: ellipsis;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  #container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  #header-container {
+    text-align: center;
+  }
+  
+  #game-container {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+  }
+  
+  #form-container {
+    width: 150px;
+    height: max-content;
+    padding: 24px;
+    outline: aquamarine solid 2px;
+    border-radius: 10px;
+    box-shadow: darkcyan 8px 8px;
+    background-color: white;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .name-input {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+  }
+  
+  #tic-tac-toe-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 4px;
+    width: max-content;
+    background-color: darkcyan;
+    margin-bottom: 24px;
+  }
+  .cell {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    cursor: pointer;
+  }
+  
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes rotate2 {
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+  
+  .xo {
+    position: fixed;
+    font-size: 200px;
+    font-weight: bolder;
+    color: aquamarine;
+    opacity: 30%;
+    z-index: -1;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  
+  .xo:nth-of-type(odd) {
+    animation-name: rotate2;
+  }
+  
+  .xo:nth-of-type(even) {
+    animation-name: rotate;
+  }
+  
+  .xo:nth-of-type(1) {
+    left: 0%;
+    top: 0%;
+    font-size: 300px;
+    animation-delay: -10s;
+    transform-origin: 20vw 80vh;
+  }
+  
+  .xo:nth-of-type(2) {
+    left: 40%;
+    top: 70%;
+    transform-origin: 40vw -20vh;
+    animation-delay: -15s;
+  }
+  
+  .xo:nth-of-type(3) {
+    left: 70%;
+    top: 30%;
+    transform-origin: -35vw 10vh;
+  }
+  
+  .xo:nth-of-type(4) {
+    left: 50%;
+    top: 50%;
+    font-size: 300px;
+    animation-delay: -20s;
+    transform-origin: 30vw 70vh;
+  }
+  
+  .xo:nth-of-type(5) {
+    left: 10%;
+    top: 70%;
+    transform-origin: 0vw 50vh;
+  }
+  
+  .xo:nth-of-type(6) {
+    left: 0%;
+    top: 60%;
+    font-size: 300px;
+    transform-origin: 40vw -60vh;
+    animation-delay: -5s;
+  }
+  

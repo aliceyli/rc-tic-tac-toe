@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tic-Tac-Toe</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="xo">X</div>
+    <div class="xo">X</div>
+    <div class="xo">X</div>
+    <div class="xo">O</div>
+    <div class="xo">O</div>
+    <div class="xo">O</div>
+    <div id="container">
+      <div id="header-container">
+        <h1>Tic-Tac-Toe</h1>
+        <h2>Enter player names to begin</h2>
+      </div>
+      <div id="game-container">
+        <div id="form-container">
+          <form>
+            <div class="name-input" id="player-1-input">
+              <label for="name">Player 1 name</label>
+              <input type="text" id="player-1-name" />
+            </div>
+            <div class="name-input" id="player-2-input">
+              <label for="name">Player 2 name</label>
+              <input type="text" id="player-2-name" />
+            </div>
+            <button id="start" type="button">Start Game</button>
+          </form>
+        </div>
+        <div id="tic-tac-toe-container">
+          <div id="board">
+            <div class="cell" data-x="0" data-y="0"></div>
+            <div class="cell" data-x="0" data-y="1"></div>
+            <div class="cell" data-x="0" data-y="2"></div>
+            <div class="cell" data-x="1" data-y="0"></div>
+            <div class="cell" data-x="1" data-y="1"></div>
+            <div class="cell" data-x="1" data-y="2"></div>
+            <div class="cell" data-x="2" data-y="0"></div>
+            <div class="cell" data-x="2" data-y="1"></div>
+            <div class="cell" data-x="2" data-y="2"></div>
+          </div>
+          <button id="reset">Reset Board</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
