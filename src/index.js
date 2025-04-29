@@ -5,6 +5,23 @@ class Player {
   }
 }
 
+class ComputerPlayer extends Player {
+  constructor(name, token) {
+    super(name, token);
+  }
+
+  /**
+   * TO-DO: gets computer player's move based on current board
+   * @param {*} board 
+   * @returns Array of x,y coordinates
+   */
+  getMove(board) {
+    let x = 0;
+    let y = 0;
+    return [x,y];
+  }
+}
+
 class TicTacToe {
   constructor(player1, player2) {
     this.board = new Array(3).fill(null).map((el) => new Array(3).fill(null));
@@ -106,38 +123,53 @@ class TicTacToe {
   }
 }
 
+const PLAYER1AVATAR = "X";
+const PLAYER2AVATAR = "O";
+
 const onStart = (e) => {
   const startButton = e.target;
-  const statusHeading = document.querySelector("h2");
+  const isTwoPlayer = startButton.id === "two-player";
+
   const cells = document.querySelectorAll(".cell");
   const resetButton = document.querySelector("#reset");
 
-  const { value: player1Name } = document.querySelector("#player-1-name");
-  const { value: player2Name } = document.querySelector("#player-2-name");
-
-  const player1Element = document.querySelector("#player-1-input");
-  const player2Element = document.querySelector("#player-2-input");
-
-  const player1Text = document.createElement("p");
-  player1Text.innerText = `Player 1: \n${player1Name}`;
-  const player2Text = document.createElement("p");
-  player2Text.innerText = `Player 2: \n${player2Name}`;
-
   // initialize players
-  const player1 = new Player(player1Name, "X");
-  const player2 = new Player(player2Name, "O");
+  let player1Name;
+  let player2Name;
+  let player1;
+  let player2;
+  if (isTwoPlayer) {
+    player1Name = document.querySelector("#player-1-name").value;
+    player2Name = document.querySelector("#player-2-name").value;
+    player1 = new Player(player1Name, PLAYER1AVATAR);
+    player2 = new Player(player2Name, PLAYER2AVATAR);
+  } else {
+    player1Name = "Player";
+    player2Name = "Computer";
+    player1 = new Player(player1Name, PLAYER1AVATAR);
+    player2 = new ComputerPlayer(player2Name, PLAYER2AVATAR);
+  }
 
   // initialize game
   const game = new TicTacToe(player1, player2);
 
   // update heading
+  const statusHeading = document.querySelector("h2");
   const startHeading = `${player1.name} plays first`;
   statusHeading.innerText = startHeading;
 
   // remove form elements and replace with inputted names
+  const player1Text = document.createElement("p");
+  player1Text.innerText = `Player 1: \n${player1Name}`;
+  const player2Text = document.createElement("p");
+  player2Text.innerText = `Player 2: \n${player2Name}`;
+
+  const player1Element = document.querySelector("#player-1-input");
+  const player2Element = document.querySelector("#player-2-input");
+
   player1Element.replaceChildren(player1Text);
   player2Element.replaceChildren(player2Text);
-  startButton.remove();
+  document.querySelector("#start-buttons").remove();
 
   // add event listeners for tic-tac-toe spaces and reset button
   const onClick = createOnClick({ game, cells, statusHeading });
@@ -147,31 +179,43 @@ const onStart = (e) => {
   });
 };
 
+const makeMove = ({ x, y, game, cells, statusHeading, onClick }) => {
+  const currentPlayer = game.play([x, y]);
+  const selectedCell = [...cells].find((cell) => parseInt(cell.dataset.x) ===  x && parseInt(cell.dataset.y) === y);
+  selectedCell.innerText = currentPlayer.token;
+
+  const winner = game.checkWinner();
+  const isTie = game.isTie();
+  const gameOver = winner || isTie;
+
+  if (winner) {
+    statusHeading.innerText = `${winner.name} wins. Game Over!`;
+  } else if (isTie) {
+    statusHeading.innerText = "It's a tie!";
+  } else {
+    game.nextPlayer();
+    statusHeading.innerText = `${game.currentPlayer.name}'s turn`;
+  }
+
+  if (gameOver) {
+    cells.forEach((cell) => cell.removeEventListener("click", onClick));
+  }
+}
+
+
 const createOnClick = ({ game, cells, statusHeading }) => {
   return function onClick(e) {
     try {
       const x = parseInt(e.target.dataset.x);
       const y = parseInt(e.target.dataset.y);
 
-      const currentPlayer = game.play([x, y]);
-      e.target.innerText = currentPlayer.token;
+      makeMove({ x, y, game, cells, statusHeading, onClick });
 
-      const winner = game.checkWinner();
-      const isTie = game.isTie();
-      const gameOver = winner || isTie;
-
-      if (winner) {
-        statusHeading.innerText = `${winner.name} wins. Game Over!`;
-      } else if (isTie) {
-        statusHeading.innerText = "It's a tie!";
-      } else {
-        game.nextPlayer();
-        statusHeading.innerText = `${game.currentPlayer.name}'s turn`;
+      if (game.currentPlayer instanceof ComputerPlayer) {
+        const [compX , compY] = game.currentPlayer.getMove(game.board);
+        makeMove({ x: compX, y: compY, game, cells, statusHeading, onClick });
       }
 
-      if (gameOver) {
-        cells.forEach((cell) => cell.removeEventListener("click", onClick));
-      }
     } catch (error) {
       statusHeading.innerText = error.message;
     }
@@ -188,6 +232,8 @@ const onReset = ({ game, cells, statusHeading, startHeading, onClick }) => {
   });
 };
 
-const startButton = document.querySelector("#start");
+const playWithPlayerButton = document.querySelector("#two-player");
+const playWithComputerButton = document.querySelector("#computer");
 
-startButton.addEventListener("click", onStart);
+playWithPlayerButton.addEventListener("click", onStart);
+playWithComputerButton.addEventListener("click", onStart)

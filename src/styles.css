@@ -24,7 +24,7 @@ body {
     cursor: pointer;
   }
   
-  #start {
+  #two-player, #computer {
     margin-top: 8px;
     padding: 8px;
     background-color: aquamarine;
@@ -48,6 +48,11 @@ body {
     white-space: nowrap;
   }
   
+  .center {
+    text-align: center;
+    margin-top: 12px;
+  }
+
   #container {
     display: flex;
     flex-direction: column;
